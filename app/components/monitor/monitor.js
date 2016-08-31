@@ -4,7 +4,9 @@
 
   function monitorController($scope, $state, gameModel, $cookies, qrCodeGeneratorServiceFactory){
     var vm = this;
+    vm.gameModel = null;
     vm.goTo = $scope.nav.goTo;
+
 
     gameModel.newGame().then(function(){
       $scope.$applyAsync(function(){

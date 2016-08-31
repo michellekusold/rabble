@@ -4,5 +4,10 @@
 <p>Or scan</p>
 <div id="qrCode"></div>
 <p>Drag to change the player order</p>
-<ul class="activePlayers"></ul>
+<ul class="activePlayers">
+  <li ng-repeat="activePlayer in vm.activePlayers">
+      <img class="avatar"/>
+      <p>Name</p>
+  </li>
+</ul>
 <button>All Players are Ready!</button>

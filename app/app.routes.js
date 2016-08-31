@@ -36,5 +36,11 @@ function configureRoutes($stateProvider, $urlRouterProvider) {
               url: "/waiting",
               templateUrl: "components/play/waiting.html",
               controller: "playController as vm"
+          })
+          .state("play.draw", {
+              parent: "play",
+              url: "/draw",
+              templateUrl: "components/play/draw.html",
+              controller: "playController as vm"
           });
 }
