@@ -1,8 +1,8 @@
 (function () {
 angular.module('rabble.controllers').controller("playController", playController);
-playController.$inject = ["$scope", "$state", "playerModel", "playerDbServiceFactory", "gameDbServiceFactory"];
+playController.$inject = ["$scope", "$state", "playerModel", "paperStackModel", "playerDbServiceFactory", "gameDbServiceFactory"];
 
-function playController($scope, $state, playerModel, playerDbServiceFactory, gameDbServiceFactory){
+function playController($scope, $state, playerModel, paperStackModel, playerDbServiceFactory, gameDbServiceFactory){
   var vm = this;
 
   vm.canvas = null;

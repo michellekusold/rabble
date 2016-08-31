@@ -1,8 +1,8 @@
 (function(){
   'use strict';
   angular.module("rabble.models").factory("gameModel", gameModel);
-  gameModel.$inject = ["gameDbServiceFactory"];
-  function gameModel(gameDbServiceFactory){
+  gameModel.$inject = ["gameDbServiceFactory", "$q"];
+  function gameModel(gameDbServiceFactory, $q){
       var ORDER_TYPE = {
         clockwise: "CLOCKWISE",
         counterclockwise: "COUNTER_CLOCKWISE",
@@ -14,26 +14,9 @@
         code: null,
         playerCount: null,
         orderType: null,
-        order: []
+        order: [],
+        players: []
       };
-
-      function syncDB(dbGame){
-        if(dbGame.id){
-          gameModel.id = dbGame.id;
-        }
-        if(dbGame.code){
-          gameModel.code = dbGame.code;
-        }
-        if(dbGame.playerCount){
-          gameModel.playerCount = dbGame.playerCount;
-        }
-        if(dbGame.orderType){
-          gameModel.orderType = dbGame.orderType;
-        }
-        if(dbGame.order){
-          gameModel.order = dbGame.order;
-        }
-      }
 
   return{
     getGameModel: function(){
@@ -49,7 +32,8 @@
       };
     },
     newGame: function(){
-      var newGameModel = gameDbServiceFactory.createGame().then(function(dbGame){
+      var newGamePromise = $q.defer();
+      gameDbServiceFactory.createGame().then(function(dbGame){
           if(dbGame){
             if(dbGame.id){
               gameModel.id = dbGame.id;
@@ -63,10 +47,19 @@
             if(dbGame.order){
               gameModel.order = dbGame.order;
             }
-            return dbGame;
+            if(dbGame.players){
+              gameModel.players = dbGame.players;
+            }
+            newGamePromise.resolve(dbGame);
           }
         });
-        return newGameModel;
+        return newGamePromise.promise;
+    },
+    setActivePlayers: function(newActivePlayers){
+        var deferred = $q.defer();
+        gameModel.players = newActivePlayers;
+        deferred.resolve();
+        return deferred.promise;
     }
   }
 };

@@ -5,9 +5,9 @@
 <div id="qrCode"></div>
 <p>Drag to change the player order</p>
 <ul class="activePlayers">
-  <li ng-repeat="activePlayer in vm.activePlayers">
+  <li ng-repeat="activePlayer in vm.gameModel.players">
       <img class="avatar"/>
-      <p>Name</p>
+      <p>{{activePlayer.name}}</p>
   </li>
 </ul>
 <button>All Players are Ready!</button>
