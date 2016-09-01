@@ -88,15 +88,12 @@
       });
     };
 
-    var getActivePlayers = function(gameModel){
-        var deferred = $q.defer();
-        fb.ref('games/' + gameModel.id + '/players/').on('value', function(snapshot){
+    var getActivePlayers = function(id, callback){
+        fb.ref('games/' + id + '/players/').on('value', function(snapshot){
             var activePlayers = snapshot.val();
+            callback(activePlayers);
             //var first = activePlayers[Object.keys(activePlayers)[0]].playerId;
-            console.log(gameModel);
-            deferred.resolve(activePlayers);
         });
-        return deferred.promise;
     };
 
     return{

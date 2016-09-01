@@ -55,11 +55,14 @@
         });
         return newGamePromise.promise;
     },
-    setActivePlayers: function(newActivePlayers){
-        var deferred = $q.defer();
-        gameModel.players = newActivePlayers;
-        deferred.resolve();
-        return deferred.promise;
+    getActivePlayers: function(callback){
+      var getActivePlayersPromise = $q.defer();
+        gameDbServiceFactory.getActivePlayers(gameModel.id, function(activePlayers) {
+          if(activePlayers){
+            gameModel.players = activePlayers;
+            callback(gameModel);
+          }
+        });
     }
   }
 };

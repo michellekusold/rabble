@@ -5,19 +5,14 @@
   function monitorController($scope, $state, gameModel, $cookies, qrCodeGeneratorServiceFactory, gameDbServiceFactory, $q){
     var vm = this;
 
-    vm.gameModel = gameModel.getGameModel();;
+    vm.gameModel = gameModel.getGameModel();
     vm.goTo = $scope.nav.goTo;
 
     gameModel.newGame().then(function(){
       qrCodeGeneratorServiceFactory.generateQrCode("qrCode", vm.gameModel.code);
+      gameModel.getActivePlayers(function(newGameModel){
+        vm.gameModel = newGameModel;
+      });
     });
-
-
-    //   gameDbServiceFactory.getActivePlayers(vm.gameModel).then(function(activePlayers){
-    //     vm.gameModel.players = activePlayers;
-    //   });
-    //});
-
-
 }
 })();
